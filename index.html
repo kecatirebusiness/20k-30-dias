@@ -37,16 +37,23 @@
   .bg-cream{background:var(--cream)}
   .bg-white{background:var(--white)}
 
-  h1,h2,h3{color:var(--ink);font-weight:800;line-height:1.12;letter-spacing:-.02em}
-  h1{font-size:clamp(2.1rem,5.6vw,3.5rem);font-weight:900;text-align:center}
-  h2{font-size:clamp(1.8rem,4.4vw,2.75rem);font-weight:900;text-align:center;margin-bottom:28px}
-  h3{font-size:1.15rem;font-weight:800}
+  h1,h2,h3{color:var(--ink);font-weight:800;letter-spacing:-.02em}
+  /* line-height holgado: el resaltado amarillo se dibuja como caja por línea y,
+     con interlineado corto, la caja de una línea tapa las letras de la siguiente */
+  h1{font-size:clamp(1.95rem,5.4vw,3.4rem);font-weight:900;text-align:center;line-height:1.34}
+  h2{font-size:clamp(1.7rem,4.4vw,2.7rem);font-weight:900;text-align:center;margin-bottom:28px;line-height:1.26}
+  h3{font-size:1.15rem;font-weight:800;line-height:1.3}
   p{margin-bottom:20px}
   .center{text-align:center}
   strong,b{color:var(--ink);font-weight:700}
+  img{max-width:100%;height:auto}
 
-  .mark{background:var(--yellow);padding:2px 8px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-  .mark-blue{background:var(--periwinkle);padding:2px 8px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .mark,.mark-blue{
+    padding:.06em .3em;border-radius:3px;
+    box-decoration-break:clone;-webkit-box-decoration-break:clone;
+  }
+  .mark{background:var(--yellow)}
+  .mark-blue{background:var(--periwinkle)}
   .uline{border-bottom:5px solid var(--yellow-line);padding-bottom:1px}
 
   /* ---------- HERO ---------- */
@@ -187,13 +194,63 @@
 
   footer{background:var(--ink);color:#8D9A98;padding:52px 0;font-size:.8rem;text-align:center}
 
+  /* ═══════════ MÓVIL ═══════════ */
   @media (max-width:760px){
     body{font-size:17px}
-    section{padding:52px 0}
-    .box-mint{padding:36px 22px;border-radius:16px}
-    .about{grid-template-columns:1fr;gap:24px}
-    .about .pic{max-width:230px;margin:0 auto}
-    .stackbox{padding:24px}
+    .wrap{padding:0 18px}
+    section{padding:46px 0}
+    h2{margin-bottom:22px}
+    p{margin-bottom:17px}
+
+    .box-mint{padding:32px 20px;border-radius:16px}
+    .about{grid-template-columns:1fr;gap:22px}
+    .about .pic{max-width:250px;margin:0 auto}
+    .stackbox{padding:22px;border-radius:14px}
+    .stackbox td{font-size:.87rem;padding:11px 0}
+
+    .creator{gap:11px;margin-bottom:26px}
+    .creator .ring{width:66px;height:66px}
+    .creator .who{font-size:.95rem}
+    .hero-art{margin-top:30px}
+
+    .cta{margin:32px 0 6px}
+    .btn{padding:19px 14px;border-radius:9px}
+    .cta small{font-size:.78rem}
+
+    ul.checks li,ul.chevrons li{padding-left:34px;padding-bottom:18px}
+    ul.checks li::before{width:21px;height:21px;background-size:13px}
+
+    .shot-big{max-width:100%}
+    .proof img,.shot-big img{border-radius:11px}
+    .proof-title{font-size:1.06rem}
+
+    /* el total pasa a columna: en fila los números se comen el ancho */
+    .statrow{grid-template-columns:1fr;gap:6px;margin-bottom:28px}
+    .statrow .arw{transform:rotate(90deg);font-size:1.35rem;margin:2px 0}
+
+    .versus{gap:8px}
+    .versus .vs{padding:8px 12px;font-size:1rem;margin:4px 0}
+    .versus figcaption{margin-top:10px;font-size:.86rem}
+    .versus .big{font-size:1.15rem}
+
+    .price .now{margin-top:4px}
+    details{padding:19px 0}
+    summary{font-size:.97rem;padding-right:30px}
+    summary::after{font-size:1.5rem;top:-4px}
+    details p{font-size:.93rem}
+
+    footer{padding:40px 0}
+  }
+
+  @media (max-width:420px){
+    body{font-size:16.5px}
+    .wrap{padding:0 15px}
+    .mark,.mark-blue{padding:.05em .22em}
+    .socialproof{gap:10px}
+    .stack span{width:44px;height:44px;margin-left:-13px;font-size:.7rem}
+    .stars{font-size:1.25rem}
+    .shot-grid{gap:22px}
+    .btn{font-size:.98rem;letter-spacing:0}
   }
 </style>
 </head>
@@ -592,7 +649,7 @@
   <div class="wrap">
     <h2>Quién Te Está Hablando</h2>
     <div class="about">
-      <div class="pic"><img src="img/kevin-avatar.png" alt="Kevin Rodriguez"></div>
+      <div class="pic"><img src="img/kevin-retrato.png" alt="Kevin Rodriguez"></div>
       <div>
         <p>Soy Kevin Rodriguez. No soy gurú de Instagram y no vivo de enseñar Instagram — vivo de
         construir negocios, y para eso necesité aprender a levantar audiencias rápido.</p>
