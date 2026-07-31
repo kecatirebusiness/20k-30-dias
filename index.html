@@ -7,6 +7,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+  /* El navegador recuerda la posición de scroll y te devuelve ahí al volver a entrar.
+     En una página de ventas eso es fatal: el visitante aterriza a mitad y se pierde
+     el hero. Se desactiva y se fuerza el inicio arriba. */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const alInicio = () => { if (!location.hash) window.scrollTo({top:0, left:0, behavior:'instant'}); };
+  window.addEventListener('load', alInicio);
+  window.addEventListener('pageshow', e => { if (e.persisted) alInicio(); });
+</script>
 <style>
   :root{
     --black:#050704;   /* igual al fondo del collage del hero, para que no se vea la costura */

@@ -9,6 +9,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://js.stripe.com/v3/"></script>
+<script>
+  /* Igual que en la landing: nadie debe aterrizar en el carrito a media página */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const alInicio = () => window.scrollTo({top:0, left:0, behavior:'instant'});
+  window.addEventListener('load', alInicio);
+  window.addEventListener('pageshow', e => { if (e.persisted) alInicio(); });
+</script>
 <style>
   :root{
     --black:#050704;
