@@ -64,6 +64,34 @@
     --shadow-sm:0 4px 18px rgba(0,0,0,.12);
   }
 
+  /* sección de cierre: bloque verde a sangre, texto negro */
+  .bg-accent{
+    --secbg:var(--g-bright);
+    --fg:#04180D;
+    --fg-soft:#0B3D22;
+    --fg-mute:#0B3D22;
+    --line:rgba(4,24,13,.18);
+    --panel:#FFFFFF;
+    --accent:#04180D;
+    --markbg:#04180D;
+    --markfg:var(--g-bright);
+    --btn-bg:#04180D;
+    --btn-fg:#FFFFFF;
+    --btn-hover:#0B3D22;
+    --shadow:0 10px 40px rgba(4,24,13,.22);
+    --shadow-sm:0 6px 24px rgba(4,24,13,.16);
+  }
+  .close-art{width:100%;max-width:560px;height:auto;display:block;margin:0 auto;
+    border-radius:18px;box-shadow:0 14px 50px rgba(4,24,13,.30)}
+  .closecard{
+    background:#fff;border-radius:16px;padding:18px 26px;margin:36px auto 0;max-width:520px;
+    display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;
+    box-shadow:0 8px 28px rgba(4,24,13,.18)
+  }
+  .closecard .stars{color:var(--g)}
+  .closecard .sp-text{color:#4A524E}
+  .closecard .stack span{border-color:#fff;background-color:var(--g);color:#fff}
+
   h1,h2,h3{color:var(--fg);font-weight:800;letter-spacing:-.02em}
   /* line-height holgado: el resaltado amarillo se dibuja como caja por línea y,
      con interlineado corto, la caja de una línea tapa las letras de la siguiente */
@@ -218,7 +246,7 @@
   details p{margin:14px 0 0;font-size:.97rem}
 
   /* ---------- SOBRE MÍ ---------- */
-  .about{display:grid;grid-template-columns:230px 1fr;gap:40px;align-items:start;max-width:780px;margin:0 auto}
+  .about{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start;max-width:780px;margin:0 auto}
   .about .pic{width:100%;aspect-ratio:1;border-radius:20px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
   .about .pic img{width:100%;height:100%;object-fit:cover;display:block}
 
@@ -719,16 +747,72 @@
   <div class="wrap">
     <h2>Quién Te Está Hablando</h2>
     <div class="about">
-      <div class="pic"><img src="img/kevin-retrato.png" alt="Kevin Rodriguez"></div>
+      <div class="pic"><img src="img/kevin-retrato.png" alt="Kevin Rodriguez grabando contenido"></div>
       <div>
-        <p>Soy Kevin Rodriguez. No soy gurú de Instagram y no vivo de enseñar Instagram — vivo de
-        construir negocios, y para eso necesité aprender a levantar audiencias rápido.</p>
-        <p>Llevo más de <strong>17 cuentas levantadas desde cero</strong> en nichos que no tienen nada
-        que ver entre sí: perros, bienestar, negocios. <strong>@mr_pawse</strong> (47.9K),
-        <strong>@kecatire</strong> (43.5K) y <strong>@elsellodelmonje</strong> (33K) son las tres
-        que documenté aquí.</p>
-        <p>Este curso es literalmente lo que hice, en orden, sin adornos. Cuesta $37 porque prefiero
-        que lo tenga mucha gente a que lo tengan diez.</p>
+        <p>Soy Kevin Rodriguez. No soy gurú de Instagram y no vivo de enseñar Instagram.</p>
+        <p>Vivo de <strong>armar ecosistemas de contenido</strong> para negocios: la estrategia
+        completa de creación y de crecimiento orgánico en redes, desde la primera pieza hasta el
+        sistema que la convierte en clientes. Con eso he generado
+        <strong>más de $100,000</strong>.</p>
+        <p>Levantar audiencias rápido no fue el objetivo — fue la herramienta. Por eso terminé
+        levantando <strong>más de 17 cuentas desde cero</strong> en nichos que no tienen nada que
+        ver entre sí: perros, bienestar, negocios.</p>
+        <p>Este curso es la parte del sistema que hace crecer las cuentas. Literalmente lo que hice,
+        en orden, sin adornos. Cuesta $37 porque prefiero que lo tenga mucha gente a que lo tengan diez.</p>
+      </div>
+    </div>
+
+    <div class="proof-title" style="margin:64px 0 8px">
+      Algunos de los negocios que he construido<br>
+      <span class="uline">con este mismo sistema de contenido</span>
+    </div>
+    <p class="center" style="max-width:640px;margin:0 auto 30px;font-size:.95rem">
+      Cuentas de cobro reales. Ninguno de estos negocios existía antes de la audiencia.
+    </p>
+
+    <div class="shot-grid">
+      <figure>
+        <img src="img/rev-3.png" alt="Panel de ingresos: $24,200.00">
+        <figcaption>Un negocio<br><strong>$24,200</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="img/rev-1.png" alt="Stripe: volumen bruto $31,851.58">
+        <figcaption>Otro negocio<br><strong>$31,851</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="img/rev-2.png" alt="Stripe: volumen bruto $10,149.00">
+        <figcaption>Otro más<br><strong>$10,149</strong></figcaption>
+      </figure>
+    </div>
+
+    <p class="center" style="max-width:680px;margin:34px auto 0">
+      Son tres de varios. <strong>Más de $100,000 en total</strong>, todos construidos sobre lo mismo:
+      una audiencia que llegó por el contenido, no por la pauta.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ CIERRE ═══════════ -->
+<section class="bg-accent">
+  <div class="wrap">
+    <img class="close-art" src="img/hero-collage.png" alt="El sistema 20K en 30 días">
+    <h2 style="margin-top:34px">Ya sea que empieces desde cero o lleves años estancado, lo único que te falta es el sistema correcto.</h2>
+    <p class="center" style="max-width:640px;margin:0 auto">
+      Entra a <strong>20K en 30 Días</strong> y te enseño exactamente cómo lo hice — las 17 veces.
+    </p>
+    <div class="cta">
+      <a href="#comprar" class="btn">QUIERO LLEGAR A 20K</a>
+    </div>
+    <div class="closecard">
+      <div class="stack">
+        <span style="background-image:url('img/kevin-avatar.png')"></span>
+        <span style="background-image:url('img/av-pawse.png')"></span>
+        <span style="background-image:url('img/av-monje.png')"></span>
+        <span>+419</span>
+      </div>
+      <div>
+        <div class="stars">★★★★★</div>
+        <div class="sp-text">Más de 419 personas ayudadas</div>
       </div>
     </div>
   </div>
