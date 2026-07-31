@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo gané 20,000 seguidores en Instagram en 30 días con contenido estratégico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F4EDDB;
+    --white:#ffffff;
+    --mint:#F0F5E4;
+    --ink:#112526;
+    --body:#3C4A48;
+    --blue:#3B72F5;
+    --blue-dark:#2A5BD7;
+    --yellow:#FBE9A8;
+    --yellow-line:#F5C518;
+    --periwinkle:#C7D8FB;
+    --green:#6FBF4A;
+    --red:#D93A2B;
+    --price-green:#7BC142;
+    --line:#E6E0D3;
+    --max:860px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    color:var(--body);background:var(--cream);
+    font-size:19px;line-height:1.62;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  section{padding:72px 0}
+  .bg-cream{background:var(--cream)}
+  .bg-white{background:var(--white)}
+
+  h1,h2,h3{color:var(--ink);font-weight:800;line-height:1.12;letter-spacing:-.02em}
+  h1{font-size:clamp(2.1rem,5.6vw,3.5rem);font-weight:900;text-align:center}
+  h2{font-size:clamp(1.8rem,4.4vw,2.75rem);font-weight:900;text-align:center;margin-bottom:28px}
+  h3{font-size:1.15rem;font-weight:800}
+  p{margin-bottom:20px}
+  .center{text-align:center}
+  strong,b{color:var(--ink);font-weight:700}
+
+  .mark{background:var(--yellow);padding:2px 8px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .mark-blue{background:var(--periwinkle);padding:2px 8px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .uline{border-bottom:5px solid var(--yellow-line);padding-bottom:1px}
+
+  /* ---------- HERO ---------- */
+  .creator{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:34px}
+  .creator .ring{
+    width:82px;height:82px;border-radius:50%;padding:3px;
+    background:conic-gradient(from 200deg,#F9CE34,#EE2A7B,#6228D7,#F9CE34);
+    flex:none
+  }
+  .creator .ring img{width:100%;height:100%;border-radius:50%;display:block;border:3px solid var(--cream);object-fit:cover}
+  .creator .who{font-weight:700;color:var(--ink);font-size:1.05rem;display:flex;align-items:center;gap:6px}
+  .verified{width:19px;height:19px;flex:none}
+
+  .hero-art{width:100%;height:auto;display:block;margin:44px auto 0}
+
+  /* ---------- SOCIAL PROOF ---------- */
+  .socialproof{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding:8px 0 4px}
+  .stack{display:flex}
+  .stack span{
+    width:52px;height:52px;border-radius:50%;border:3px solid var(--cream);
+    margin-left:-16px;background-size:cover;background-position:center;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.78rem;font-weight:800;color:var(--ink);background-color:#DED8CB;
+    letter-spacing:-.02em
+  }
+  .stack span:first-child{margin-left:0}
+  .stars{color:var(--yellow-line);font-size:1.45rem;letter-spacing:2px;line-height:1}
+  .sp-text{font-size:.86rem;color:var(--body)}
+
+  /* ---------- CTA ---------- */
+  .cta{margin:44px 0 8px;text-align:center}
+  .btn{
+    display:block;width:100%;background:var(--blue);color:#fff;text-decoration:none;
+    font-weight:800;font-size:clamp(1.05rem,2.6vw,1.5rem);letter-spacing:.01em;
+    padding:26px 24px;border-radius:10px;text-align:center;
+    transition:background .15s ease,transform .12s ease;
+  }
+  .btn:hover{background:var(--blue-dark);transform:translateY(-2px)}
+  .cta small{display:block;margin-top:14px;font-size:.84rem;color:var(--body)}
+
+  /* ---------- LISTAS ---------- */
+  ul.checks{list-style:none;margin:0 auto 8px;max-width:720px}
+  ul.checks li{position:relative;padding:0 0 22px 42px}
+  ul.checks li::before{
+    content:"";position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:50%;
+    background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/15px no-repeat;
+  }
+  ul.chevrons{list-style:none;margin:0 auto;max-width:720px}
+  ul.chevrons li{position:relative;padding:0 0 22px 42px}
+  ul.chevrons li::before{
+    content:"»";position:absolute;left:6px;top:-2px;color:var(--green);
+    font-size:1.5rem;font-weight:800;line-height:1.4
+  }
+
+  /* ---------- CAJA MINT ---------- */
+  .box-mint{
+    background:var(--mint);border:1px solid #DCE7C8;border-radius:20px;
+    padding:56px 44px;margin:0 auto;max-width:940px
+  }
+
+  /* ---------- PRUEBAS ---------- */
+  .proof{margin:40px auto;max-width:660px}
+  .proof img{width:100%;height:auto;display:block;border-radius:14px;box-shadow:0 3px 22px rgba(17,37,38,.10)}
+  .proof .cap{text-align:center;font-size:.85rem;color:#7C8785;margin-top:12px}
+  .proof-title{text-align:center;font-weight:800;color:var(--ink);font-size:1.2rem;margin-bottom:20px;line-height:1.4}
+
+  /* ---------- INSIGHTS ---------- */
+  .statrow{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;
+    max-width:620px;margin:0 auto 34px;text-align:center}
+  .statrow .lbl{font-size:.72rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:#8A9391;margin-bottom:4px}
+  .statrow .n{font-size:clamp(1.7rem,5.5vw,2.6rem);font-weight:900;color:var(--ink);letter-spacing:-.03em;line-height:1}
+  .statrow .n.hi{color:var(--red)}
+  .statrow .arw{font-size:1.7rem;color:var(--red);font-weight:900}
+
+  /* cara a cara */
+  .versus{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:start;max-width:820px;margin:0 auto}
+  .versus figure{margin:0}
+  .versus img{width:100%;height:auto;display:block;border-radius:14px;border:1px solid var(--line);box-shadow:0 3px 20px rgba(17,37,38,.09)}
+  .versus .vs{align-self:center;font-weight:900;color:var(--ink);font-size:1.1rem;background:var(--yellow);
+    border-radius:100px;padding:10px 14px;line-height:1}
+  .versus figcaption{text-align:center;margin-top:14px;font-size:.9rem;line-height:1.45}
+  .versus .big{display:block;font-weight:900;color:var(--ink);font-size:1.25rem;letter-spacing:-.02em}
+  .versus .bad .big{color:#9AA3A1}
+  .versus .good .big{color:var(--red)}
+  @media (max-width:640px){
+    .versus{grid-template-columns:1fr;max-width:380px}
+    .versus .vs{justify-self:center}
+  }
+
+  .shot-big{max-width:400px;margin:0 auto}
+  .shot-big img{width:100%;height:auto;display:block;border-radius:16px;border:1px solid var(--line);box-shadow:0 4px 26px rgba(17,37,38,.10)}
+  .shot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:780px;margin:30px auto 0}
+  .shot-grid figure{margin:0}
+  .shot-grid img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line);box-shadow:0 3px 16px rgba(17,37,38,.08)}
+  .shot-grid figcaption{text-align:center;font-size:.78rem;color:#7C8785;margin-top:9px;line-height:1.4}
+  @media (max-width:640px){ .shot-grid{grid-template-columns:1fr;max-width:400px} }
+
+  /* ---------- MÓDULOS ---------- */
+  .mod{max-width:720px;margin:0 auto 12px}
+  .mod p{margin-bottom:0}
+  .mod-shot{max-width:640px;margin:26px auto 56px}
+  .mod-shot img{width:100%;height:auto;display:block}
+
+  /* ---------- PRECIO ---------- */
+  .price{text-align:center;margin:56px 0 0}
+  .price .reg{font-size:clamp(1.3rem,3.4vw,1.9rem);font-weight:800;color:var(--ink)}
+  .price .reg s{color:var(--red);text-decoration-thickness:3px}
+  .price .now{font-size:clamp(1.7rem,4.6vw,2.6rem);font-weight:900;color:var(--ink);margin-top:6px}
+  .price .now span{color:var(--price-green)}
+
+  /* ---------- STACK DE VALOR ---------- */
+  .stackbox{background:var(--white);border-radius:18px;padding:36px;max-width:640px;margin:44px auto 0;border:1px solid var(--line)}
+  .stackbox table{width:100%;border-collapse:collapse}
+  .stackbox td{padding:13px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+  .stackbox td:last-child{text-align:right;white-space:nowrap;color:#8A9391}
+  .stackbox tr:last-child td{border-bottom:none;font-weight:800;color:var(--ink);font-size:1.05rem;padding-top:18px}
+
+  /* ---------- FAQ ---------- */
+  details{border-bottom:1px solid var(--line);padding:22px 0;max-width:720px;margin:0 auto}
+  summary{font-weight:700;color:var(--ink);cursor:pointer;list-style:none;position:relative;padding-right:36px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:2px;top:-6px;font-size:1.7rem;color:var(--blue);font-weight:400}
+  details[open] summary::after{content:"–"}
+  details p{margin:14px 0 0;font-size:.97rem}
+
+  /* ---------- SOBRE MÍ ---------- */
+  .about{display:grid;grid-template-columns:230px 1fr;gap:40px;align-items:start;max-width:780px;margin:0 auto}
+  .about .pic{width:100%;aspect-ratio:1;border-radius:20px;overflow:hidden;background:#DED8CB}
+  .about .pic img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* ---------- PLACEHOLDER ---------- */
+  .ph{
+    background:repeating-linear-gradient(45deg,#EFEADC,#EFEADC 10px,#E6E0D0 10px,#E6E0D0 20px);
+    border:1px dashed #B6AE99;border-radius:12px;color:#8A8064;
+    padding:26px;text-align:center;font-size:.8rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:.06em;max-width:660px;margin:32px auto
+  }
+
+  footer{background:var(--ink);color:#8D9A98;padding:52px 0;font-size:.8rem;text-align:center}
+
+  @media (max-width:760px){
+    body{font-size:17px}
+    section{padding:52px 0}
+    .box-mint{padding:36px 22px;border-radius:16px}
+    .about{grid-template-columns:1fr;gap:24px}
+    .about .pic{max-width:230px;margin:0 auto}
+    .stackbox{padding:24px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="bg-cream" style="padding-top:52px">
+  <div class="wrap">
+
+    <div class="creator">
+      <div class="ring"><img src="img/kevin-avatar.png" alt="Kevin Rodriguez"></div>
+      <div class="who">
+        Kevin Rodriguez
+        <svg class="verified" viewBox="0 0 24 24" fill="#1D9BF0"><path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81C14.67 2.63 13.43 1.75 12 1.75s-2.67.88-3.34 2.19c-1.39-.46-2.9-.2-3.91.81s-1.27 2.52-.81 3.91C2.63 9.33 1.75 10.57 1.75 12s.88 2.67 2.19 3.34c-.46 1.39-.2 2.9.81 3.91s2.52 1.27 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.67-.88 3.34-2.19c1.39.46 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"/></svg>
+      </div>
+    </div>
+
+    <h1>Cómo gané <span class="mark">20,000 seguidores</span> en Instagram en 30 días con contenido estratégico</h1>
+
+    <img class="hero-art" src="img/hero-collage.png" alt="El sistema 20K en 30 días">
+
+    <div class="cta">
+      <a href="#comprar" class="btn">QUIERO LLEGAR A 20K</a>
+      <small>Acceso inmediato · Pago único de $37 · De por vida</small>
+    </div>
+
+    <div class="socialproof" style="margin-top:40px">
+      <div class="stack">
+        <span style="background-image:url('img/kevin-avatar.png')"></span>
+        <span style="background-image:url('img/av-pawse.png')"></span>
+        <span style="background-image:url('img/av-monje.png')"></span>
+        <span>+419</span>
+      </div>
+      <div>
+        <div class="stars">★★★★★</div>
+        <div class="sp-text">Más de 419 personas ayudadas</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ ESTE SISTEMA TE AYUDARÁ A ═══════════ -->
+<section class="bg-white">
+  <div class="wrap">
+    <h2><span class="mark">Este Sistema Te Ayudará A:</span></h2>
+    <ul class="checks">
+      <li>Construir una serie de contenido que la gente <strong>necesita seguir</strong> para ver el siguiente episodio — no piezas sueltas que se olvidan.</li>
+      <li>Conseguir <strong>mil seguidores por publicación</strong> en vez de mil publicaciones para conseguir seguidores.</li>
+      <li>Crecer <strong>sin salir en cámara</strong>, sin pauta y sin publicar todos los días.</li>
+      <li>Saber exactamente qué decir, cómo estructurarlo y en qué orden publicarlo durante los 30 días.</li>
+      <li>Levantar una cuenta en <strong>cualquier nicho</strong> — el sistema es de estructura, no de tema.</li>
+    </ul>
+    <div class="cta">
+      <a href="#comprar" class="btn">MUÉSTRAME EL SISTEMA</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ¿ESTO ES PARA MÍ? ═══════════ -->
+<section class="bg-cream">
+  <div class="wrap">
+    <div class="box-mint">
+      <h2>¿Esto Es Para Mí?</h2>
+      <p class="center" style="margin-bottom:32px">Este curso es para ti si:</p>
+      <ul class="chevrons">
+        <li>Publicas en Instagram pero <strong>no creces</strong> y no sabes qué estás haciendo mal.</li>
+        <li>Estás empezando desde cero y <strong>no tienes idea de qué contenido crear</strong>.</li>
+        <li>Un reel se te fue a 100K vistas y <strong>no te dejó ni 50 seguidores</strong>.</li>
+        <li>No tienes tiempo para publicar todos los días ni vivir pegado al celular.</li>
+        <li>Te da vergüenza que tu cuenta se vea vacía cuando la compartes.</li>
+        <li><strong>No quieres salir en cámara</strong> pero igual quieres una cuenta grande.</li>
+        <li>Estás cansado de tips, hacks y trends que <strong>no te dan resultados</strong>.</li>
+        <li>Ya publicas, pero tu crecimiento está estancado.</li>
+      </ul>
+      <div class="cta">
+        <a href="#comprar" class="btn">SÍ, ESTO ES PARA MÍ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ HISTORIA ═══════════ -->
+<section class="bg-white">
+  <div class="wrap">
+    <h2>La primera vez pensé que fue suerte.<br>Diecisiete cuentas después, dejé de pensarlo.</h2>
+
+    <p class="center">
+      Levanté una cuenta de cero y en menos de un mes tenía 20,000 seguidores. Me felicitaron,
+      me preguntaron qué había hecho, y dije lo que dice todo el mundo: <em>"constancia y buen contenido"</em>.
+    </p>
+    <p class="center"><strong>Mentira. No tenía idea de qué había pasado.</strong></p>
+    <p class="center">
+      Así que hice lo único honesto: abrí otra cuenta. Otro nicho, donde yo no era nadie y no tenía
+      audiencia que arrastrar. Repetí paso por paso lo que había hecho. <strong>Volvió a pasar.</strong>
+    </p>
+    <p class="center">
+      Hoy llevo <strong>más de 17 cuentas levantadas desde cero</strong>. Y el dato que a mí me convenció
+      no es el número más alto — es el más bajo:
+    </p>
+    <p class="center" style="font-size:1.15rem">
+      <span class="mark"><strong>Ninguna se quedó por debajo de 10,000 seguidores.</strong></span>
+    </p>
+    <p class="center">
+      No te estoy vendiendo el caso donde todo salió perfecto. Te estoy diciendo qué pasa cuando
+      el sistema sale <em>regular</em>. Estas tres son las que salieron bien:
+    </p>
+
+    <!-- PRUEBA 1 -->
+    <div class="proof">
+      <div class="proof-title">@mr_pawse — nicho de perros, desde cero<br>
+        <span class="uline">47,900 seguidores con 23 publicaciones</span></div>
+      <img src="img/mrpawse-perfil.png" alt="Perfil de @mr_pawse con 47.9K seguidores">
+      <div class="cap">Más de 2,000 seguidores por publicación. Sigue a 0 cuentas.</div>
+    </div>
+
+    <!-- PRUEBA 2 -->
+    <div class="proof">
+      <div class="proof-title">@kecatire — negocios para creadores<br>
+        <span class="uline">de 12,000 a 43,500 seguidores</span></div>
+      <img src="img/kecatire-perfil.png" alt="Perfil de @kecatire con 43.5K seguidores">
+      <div class="cap">Mi cuenta personal. El mismo sistema aplicado a una cuenta que ya existía.</div>
+    </div>
+
+    <!-- PRUEBA 3 -->
+    <div class="proof">
+      <div class="proof-title">@elsellodelmonje — sabiduría y bienestar, desde cero<br>
+        <span class="uline">33,000 seguidores con 32 publicaciones</span></div>
+      <img src="img/elsellodelmonje-perfil.png" alt="Perfil de @elsellodelmonje con 33K seguidores">
+      <div class="cap">Aquí no salgo yo. Sigue a 0 cuentas.</div>
+    </div>
+
+    <p class="center" style="margin-top:44px">
+      Súmalas: <strong>124,400 seguidores con 125 publicaciones.</strong> Tres nichos que no tienen
+      nada que ver entre sí. Y en dos de las tres <strong>ni siquiera aparezco yo</strong>.
+    </p>
+    <p class="center">
+      Si esto dependiera del tema, de la audiencia o de mi cara, habría funcionado una vez
+      y las otras dieciséis serían un cementerio. <strong>No lo son.</strong>
+    </p>
+
+    <div class="cta">
+      <a href="#comprar" class="btn">QUIERO ESTOS RESULTADOS</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ INSIGHTS: SEGUIDORES POR REEL ═══════════ -->
+<section class="bg-cream">
+  <div class="wrap">
+    <h2>Pero las vistas no son seguidores.<br><span class="mark">Esto sí.</span></h2>
+
+    <p class="center" style="max-width:680px;margin:0 auto 12px">
+      Todo el mundo enseña capturas de vistas. Las vistas no significan nada — te lo dice
+      cualquiera que se haya hecho viral y no haya ganado seguidores.
+    </p>
+    <p class="center" style="max-width:680px;margin:0 auto 44px">
+      Instagram tiene una métrica que casi nadie muestra: <strong>Follows</strong>. Te dice, reel
+      por reel, <strong>cuántos seguidores nuevos te trajo esa pieza exacta</strong>.
+      Es la única que importa. Es la que está circulada en rojo.
+    </p>
+
+    <div class="proof-title" style="margin-bottom:26px">
+      Dos publicaciones mías, casi las mismas vistas.<br>
+      <span class="uline">Ahora mira los seguidores.</span>
+    </div>
+
+    <div class="versus">
+      <figure class="bad">
+        <img src="img/pawse-pata.png" alt="Insights: 1,461,740 vistas y solo 330 follows">
+        <figcaption>
+          1,461,740 vistas<br>
+          <span class="big">330 seguidores</span>
+        </figcaption>
+      </figure>
+      <div class="vs">VS</div>
+      <figure class="good">
+        <img src="img/kec-sauna.png" alt="Insights: 1,484,959 vistas y 27,101 follows">
+        <figcaption>
+          1,484,959 vistas<br>
+          <span class="big">27,101 seguidores</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="center" style="max-width:700px;margin:38px auto 0;font-size:1.08rem">
+      Veintitrés mil vistas de diferencia entre los dos. <strong>Menos de un 2%.</strong>
+    </p>
+    <p class="center" style="max-width:700px;margin:0 auto 8px">
+      <span class="mark"><strong>Y uno trajo 82 veces más seguidores que el otro.</strong></span>
+    </p>
+    <p class="center" style="max-width:700px;margin:0 auto">
+      Un millón y medio de personas vieron el primero. Trescientas treinta pulsaron seguir.
+      Eso es lo que pasa cuando el contenido entretiene pero no da ninguna razón para volver.
+    </p>
+    <p class="center" style="max-width:700px;margin:0 auto">
+      El segundo, con el mismo alcance, trajo <strong>27,101 seguidores</strong> — más del 60% de
+      una cuenta de 43,500 con una sola publicación.
+    </p>
+    <p class="center" style="max-width:700px;margin:0 auto">
+      Mismo autor. Mismo mes. Mismas vistas. <strong>Lo único distinto fue cómo estaba
+      construido el contenido.</strong> Eso es lo que enseña este curso.
+    </p>
+
+    <h2 style="margin-top:80px">El mismo patrón,<br>en las tres cuentas</h2>
+    <p class="center" style="max-width:700px;margin:0 auto 56px">
+      Doce publicaciones documentadas, tres nichos que no tienen nada que ver.
+      Todas con el número de Instagram a la vista.
+    </p>
+
+    <!-- @elsellodelmonje -->
+    <div class="proof-title" style="margin-bottom:22px">
+      <span class="uline">@elsellodelmonje</span> · sabiduría y bienestar
+    </div>
+    <div class="shot-big">
+      <img src="img/insight-mantra.png" alt="Insights: 664,073 vistas y 18,090 follows">
+    </div>
+    <p class="center" style="max-width:640px;margin:22px auto 0">
+      <strong>664,073 vistas → 18,090 seguidores.</strong> Más de la mitad de una cuenta de
+      33,000 con un solo reel. Tiempo medio de visualización: <strong>1 minuto 8 segundos</strong>.
+    </p>
+    <div class="shot-grid">
+      <figure>
+        <img src="img/insight-amor.png" alt="Insights: 91,126 vistas y 2,428 follows">
+        <figcaption>91,126 vistas<br><strong>2,428 seguidores</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="img/insight-1am.png" alt="Insights: 107,524 vistas y 1,727 follows">
+        <figcaption>107,524 vistas<br><strong>1,727 seguidores</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="img/insight-hijo.png" alt="Insights: 91,964 vistas y 1,512 follows">
+        <figcaption>91,964 vistas<br><strong>1,512 seguidores</strong></figcaption>
+      </figure>
+    </div>
+
+    <!-- @kecatire -->
+    <div class="proof-title" style="margin:70px 0 22px">
+      <span class="uline">@kecatire</span> · negocios para creadores
+    </div>
+    <div class="shot-grid">
+      <figure>
+        <img src="img/kec-azul.png" alt="Insights: 71,369 vistas y 588 follows">
+        <figcaption>71,369 vistas<br><strong>588 seguidores</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="img/kec-fisico.png" alt="Insights: 90,511 vistas y 222 follows">
+        <figcaption>90,511 vistas<br><strong>222 seguidores</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="img/kec-535.png" alt="Insights: 22,045 vistas y 147 follows">
+        <figcaption>22,045 vistas<br><strong>147 seguidores</strong></figcaption>
+      </figure>
+    </div>
+    <p class="center" style="max-width:700px;margin:26px auto 0">
+      Más el de arriba: <strong>1,484,959 vistas → 27,101 seguidores</strong>.
+    </p>
+
+    <!-- @mr_pawse -->
+    <div class="proof-title" style="margin:70px 0 22px">
+      <span class="uline">@mr_pawse</span> · perros
+    </div>
+    <div class="shot-grid">
+      <figure>
+        <img src="img/pawse-cabina.png" alt="Insights: 1,582,982 vistas y 2,589 follows">
+        <figcaption>1,582,982 vistas<br><strong>2,589 seguidores</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="img/pawse-nuevavida.png" alt="Insights: 568,072 vistas y 1,778 follows">
+        <figcaption>568,072 vistas<br><strong>1,778 seguidores</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="img/pawse-tsunami.png" alt="Insights: 1,359,632 vistas y 878 follows">
+        <figcaption>1,359,632 vistas<br><strong>878 seguidores</strong></figcaption>
+      </figure>
+    </div>
+    <p class="center" style="max-width:700px;margin:26px auto 0">
+      Fíjate otra vez: el de 568 mil vistas trajo <strong>el doble de seguidores</strong> que el
+      de 1.3 millones. Las vistas no mandan.
+    </p>
+
+    <!-- TOTAL -->
+    <div class="statrow" style="margin-top:70px">
+      <div>
+        <div class="lbl">12 publicaciones</div>
+        <div class="n">7,595,997</div>
+        <div class="lbl" style="margin-top:6px;letter-spacing:.04em">vistas</div>
+      </div>
+      <div class="arw">→</div>
+      <div>
+        <div class="lbl">Resultado</div>
+        <div class="n hi">57,390</div>
+        <div class="lbl" style="margin-top:6px;letter-spacing:.04em">seguidores</div>
+      </div>
+    </div>
+
+    <p class="center" style="max-width:700px;margin:0 auto">
+      <strong>No estás buscando vistas. Estás buscando seguidores.</strong>
+      Son dos cosas distintas, se miden distinto y se construyen distinto.
+      Este curso es el manual de la segunda.
+    </p>
+
+    <div class="cta">
+      <a href="#comprar" class="btn">QUIERO QUE MI CONTENIDO HAGA ESTO</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LO QUE NO HICE ═══════════ -->
+<section class="bg-cream">
+  <div class="wrap">
+    <h2>Lo que <span class="mark-blue">NO</span> hice ninguna de las 17 veces</h2>
+    <ul class="chevrons" style="margin-top:36px">
+      <li>No publiqué todos los días. Ni cerca — mira los números de posts.</li>
+      <li>No gasté un dólar en publicidad.</li>
+      <li>No perseguí trends ni audios virales.</li>
+      <li>No usé hashtags como estrategia.</li>
+      <li>No seguí a nadie esperando que me siguieran de vuelta.</li>
+      <li>No salí en cámara bailando ni señalando texto flotante.</li>
+    </ul>
+    <p class="center" style="margin-top:34px;font-size:1.08rem">
+      Todo eso es lo que enseña el 90% de los cursos de Instagram.<br>
+      Por eso el 90% de quien los toma sigue en 800 seguidores.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ EL SISTEMA ═══════════ -->
+<section class="bg-white">
+  <div class="wrap">
+    <h2>El Sistema 20K en 30 Días</h2>
+    <p class="center" style="margin-bottom:36px">Son tres piezas. Si te falta una, creces lento o no creces.</p>
+    <ul class="checks">
+      <li><strong>Serie de Contenido:</strong> el mecanismo que hace que la gente tenga que seguirte para ver el siguiente episodio. Es la diferencia entre un post que da vistas y uno que da seguidores.</li>
+      <li><strong>Perfil que Convierte:</strong> la gente llega, no entiende en 3 segundos qué gana siguiéndote, y se va. Aquí se arregla eso — porque todo lo demás depende de esto.</li>
+      <li><strong>Producción por Lotes:</strong> cómo produzco 30 días de contenido en una sola sesión. Esto es lo que hace el sistema sostenible en vez de un sprint de tres días.</li>
+    </ul>
+    <div class="cta">
+      <a href="#comprar" class="btn">QUIERO EL SISTEMA COMPLETO</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LO QUE VAS A RECIBIR ═══════════ -->
+<section class="bg-cream" id="comprar">
+  <div class="wrap">
+    <h2>Lo Que Vas a Recibir</h2>
+    <p class="center" style="margin-bottom:52px">Así es como el sistema convierte tu contenido en seguidores:</p>
+
+    <div class="mod"><p><strong>El Sistema de Series de Contenido:</strong> el mapa completo para diseñar, estructurar y lanzar una serie que atrae seguidores desde cero. Sin publicar todos los días y sin autoridad previa.</p></div>
+    <div class="mod-shot"><img src="img/mod-estrategia.png" alt="Mockup del módulo de estrategia de contenido"></div>
+
+    <div class="mod"><p><strong>Optimización de Perfil:</strong> bio, nombre buscable, foto, portadas y el orden de los primeros nueve posts. Con plantilla según tu punto de partida.</p></div>
+    <div class="mod-shot"><img src="img/mockup-curso.png" alt="El curso en laptop y móvil"></div>
+
+    <div class="mod"><p><strong>El Carrusel de 7 Slides:</strong> la estructura que más seguidores me dio, slide por slide, con las 30 plantillas editables incluidas.</p></div>
+    <div class="mod-shot"><img src="img/plantillas.png" alt="30 plantillas de carrusel editables"></div>
+
+    <div class="mod"><p><strong>Reels Sin Salir en Cámara:</strong> formato, hook de 1 segundo, loop y el flujo de edición exacto. Dos de mis tres cuentas crecieron sin que yo apareciera.</p></div>
+    <div class="mod-shot"><img src="img/mod-edicion.png" alt="Mockup del módulo de edición"></div>
+
+    <div class="mod"><p><strong>El Calendario de 30 Días:</strong> qué publicar cada día del mes, en qué orden y por qué ese orden importa.</p></div>
+    <div class="mod-shot"><img src="img/mod-calendario.png" alt="Mockup del calendario de 30 días"></div>
+
+    <div class="mod"><p><strong>Métricas y Escalado:</strong> las cuatro métricas que miro y qué hago exactamente cuando un post pega, para exprimirlo en vez de dejarlo morir.</p></div>
+
+    <div class="mod" style="margin-top:36px"><p><strong>BONUS — Banco de 100 Hooks:</strong> los mismos que usé en las 17 cuentas. Copiar, adaptar, publicar.</p></div>
+
+    <div class="stackbox">
+      <table>
+        <tr><td>Sistema de Series de Contenido</td><td>$67</td></tr>
+        <tr><td>Optimización de Perfil</td><td>$47</td></tr>
+        <tr><td>El Carrusel de 7 Slides + 30 plantillas</td><td>$67</td></tr>
+        <tr><td>Reels Sin Salir en Cámara</td><td>$67</td></tr>
+        <tr><td>Calendario de 30 Días</td><td>$47</td></tr>
+        <tr><td>Métricas y Escalado</td><td>$47</td></tr>
+        <tr><td>BONUS — Banco de 100 Hooks</td><td>$97</td></tr>
+        <tr><td>Valor total</td><td>$439</td></tr>
+      </table>
+    </div>
+
+    <div class="price">
+      <div class="reg">Precio regular: <s>$439</s></div>
+      <div class="now">Precio hoy: <span>$37</span></div>
+    </div>
+
+    <div class="cta">
+      <a href="#" class="btn"><!-- PENDIENTE: link de checkout -->QUIERO ACCESO AHORA</a>
+      <small>Pago seguro · Acceso en menos de 2 minutos · De por vida</small>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ QUIÉN SOY ═══════════ -->
+<section class="bg-white">
+  <div class="wrap">
+    <h2>Quién Te Está Hablando</h2>
+    <div class="about">
+      <div class="pic"><img src="img/kevin-avatar.png" alt="Kevin Rodriguez"></div>
+      <div>
+        <p>Soy Kevin Rodriguez. No soy gurú de Instagram y no vivo de enseñar Instagram — vivo de
+        construir negocios, y para eso necesité aprender a levantar audiencias rápido.</p>
+        <p>Llevo más de <strong>17 cuentas levantadas desde cero</strong> en nichos que no tienen nada
+        que ver entre sí: perros, bienestar, negocios. <strong>@mr_pawse</strong> (47.9K),
+        <strong>@kecatire</strong> (43.5K) y <strong>@elsellodelmonje</strong> (33K) son las tres
+        que documenté aquí.</p>
+        <p>Este curso es literalmente lo que hice, en orden, sin adornos. Cuesta $37 porque prefiero
+        que lo tenga mucha gente a que lo tengan diez.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section class="bg-cream">
+  <div class="wrap">
+    <h2>Preguntas Frecuentes</h2>
+
+    <details><summary>¿Sirve si mi cuenta ya tiene seguidores?</summary>
+      <p>Sí. @kecatire pasó de 12,000 a 43,500 con este mismo sistema. El módulo de perfil incluye
+      qué hacer con una cuenta que ya existe.</p></details>
+
+    <details><summary>¿Funciona en mi nicho?</summary>
+      <p>17 cuentas, 17 temas distintos. Si existiera un nicho donde el sistema no funciona, con
+      17 intentos ya me habría topado con él. El sistema es de estructura, no de tema.</p></details>
+
+    <details><summary>¿Tengo que salir en cámara?</summary>
+      <p>No. En dos de las tres cuentas documentadas no aparezco. Hay un módulo entero dedicado a
+      hacer reels sin salir tú.</p></details>
+
+    <details><summary>¿Cuánto tiempo necesito al día?</summary>
+      <p>Mira los números: 23 posts para 47.9K seguidores. El sistema está armado para producir por
+      lotes — una sesión cubre varios días. No necesitas estar en Instagram a diario.</p></details>
+
+    <details><summary>¿Es en vivo o grabado?</summary>
+      <p>Grabado. Entras y empiezas hoy mismo, a tu ritmo, con acceso de por vida.</p></details>
+
+    <details><summary>¿Me garantizas los 20,000 seguidores?</summary>
+      <p>No, y desconfía de quien te lo garantice. De mis 17 cuentas, tres pasaron los 20,000 y el
+      resto se quedó entre 10,000 y 15,000. Te doy el sistema exacto que produjo ese rango. Dónde
+      caigas dentro de él depende de tu ejecución.</p></details>
+
+    <details><summary>¿Necesito saber diseñar o editar?</summary>
+      <p>No. Las plantillas vienen hechas y el flujo de edición es el mínimo indispensable.</p></details>
+
+    <details><summary>¿Hay devolución?</summary>
+      <p><!-- PENDIENTE: definir política de devolución -->—</p></details>
+
+    <div class="cta" style="margin-top:52px">
+      <a href="#comprar" class="btn">ENTRAR POR $37</a>
+      <small>Acceso inmediato · Pago único</small>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p style="color:#8D9A98;font-size:.78rem;line-height:1.6">
+      Los resultados mostrados corresponden a cuentas propias y no constituyen una garantía de
+      resultados. Tu resultado depende de tu nicho, tu ejecución y factores fuera de nuestro control.
+      Este sitio no está afiliado a Instagram ni a Meta Platforms, Inc.
+    </p>
+    <p style="margin-top:22px;color:#8D9A98">© <span id="y"></span> Kecatire · Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
