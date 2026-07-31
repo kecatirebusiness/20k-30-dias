@@ -220,9 +220,17 @@
     ul.checks li,ul.chevrons li{padding-left:34px;padding-bottom:18px}
     ul.checks li::before{width:21px;height:21px;background-size:13px}
 
-    .shot-big{max-width:100%}
+    /* insights: dos columnas para que la sección no se haga eterna */
+    .shot-grid{grid-template-columns:1fr 1fr;gap:12px;max-width:100%;margin-top:22px}
+    .shot-grid figcaption{font-size:.72rem;margin-top:7px;line-height:1.35}
+    .shot-grid img{border-radius:9px}
+    /* la tercera queda huérfana: se centra a media caja */
+    .shot-grid figure:last-child:nth-child(odd){grid-column:1/-1;width:calc(50% - 6px);margin:0 auto}
+
+    .shot-big{max-width:290px}
     .proof img,.shot-big img{border-radius:11px}
     .proof-title{font-size:1.06rem}
+    .versus{max-width:330px}
 
     /* el total pasa a columna: en fila los números se comen el ancho */
     .statrow{grid-template-columns:1fr;gap:6px;margin-bottom:28px}
@@ -249,7 +257,8 @@
     .socialproof{gap:10px}
     .stack span{width:44px;height:44px;margin-left:-13px;font-size:.7rem}
     .stars{font-size:1.25rem}
-    .shot-grid{gap:22px}
+    .shot-grid{gap:10px}
+    .shot-grid figcaption{font-size:.68rem}
     .btn{font-size:.98rem;letter-spacing:0}
   }
 </style>
