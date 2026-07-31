@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Completa tu compra — 20K en 30 Días</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+  :root{
+    --black:#050704;
+    --white:#FFFFFF;
+    --g-bright:#3DDC84;
+    --g:#10A75C;
+    --g-deep:#0A6E3C;
+    --g-soft:#E7FBF0;
+    --ink:#0A0B0A;
+    --body:#4A524E;
+    --mute:#8A938D;
+    --line:#E2E7E4;
+    --red:#D93A2B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  /* display:flex de .line ganaría al atributo hidden si no se fuerza */
+  [hidden]{display:none !important}
+  body{
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:var(--black);color:#A7B0AA;font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit}
+
+  .wrap{max-width:1140px;margin:0 auto;padding:40px 22px 70px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  /* sin esto, el ancho mínimo de los inputs estira la columna y desborda en móvil */
+  .grid > *{min-width:0}
+  input,select{min-width:0}
+
+  /* ---------- COLUMNA IZQUIERDA ---------- */
+  .prod h1{
+    font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;color:#fff;
+    text-align:center;line-height:1.2;letter-spacing:-.02em
+  }
+  .prod .art{margin:26px auto 22px;max-width:440px;border-radius:16px;
+    box-shadow:0 0 0 1px rgba(255,255,255,.10), 0 12px 44px rgba(255,255,255,.14)}
+  .prod .price{text-align:center;font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:900;color:var(--g-bright)}
+  .prod h2{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:900;color:#fff;text-align:center;margin:26px 0 24px}
+  ul.inc{list-style:none}
+  ul.inc li{position:relative;padding:0 0 20px 38px;font-size:.97rem}
+  ul.inc li::before{
+    content:"";position:absolute;left:0;top:5px;width:22px;height:22px;border-radius:50%;
+    background:var(--g-bright) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23041a0f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/13px no-repeat;
+  }
+  ul.inc b{color:#fff;font-weight:700}
+  ul.inc i{color:#A7B0AA;font-style:italic}
+
+  /* ---------- FORMULARIO ---------- */
+  .card{background:#fff;border-radius:18px;padding:34px;color:var(--body);
+    box-shadow:0 16px 60px rgba(0,0,0,.5)}
+  .card h3{font-size:1.25rem;font-weight:800;color:var(--ink);margin-bottom:6px}
+  label{display:block;font-size:.88rem;font-weight:600;color:var(--ink);margin:18px 0 7px}
+  label .req{color:var(--red)}
+  input[type=text],input[type=email],input[type=tel],select{
+    width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:9px;
+    font-family:inherit;font-size:.97rem;color:var(--ink);background:#fff;
+    transition:border-color .15s ease, box-shadow .15s ease
+  }
+  input:focus,select:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(16,167,92,.15)}
+  input::placeholder{color:#B4BCB8}
+  .row2{display:grid;grid-template-columns:110px 1fr;gap:10px}
+
+  .paytitle{font-size:1.05rem;font-weight:800;color:var(--ink);margin:28px 0 12px}
+  .paybox{border:1px solid var(--line);border-radius:11px;padding:18px}
+  .paybox .head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .paybox .head span{font-weight:600;font-size:.93rem;color:var(--ink)}
+  .cards{margin-left:auto;display:flex;gap:6px;align-items:center}
+  .cards svg{height:22px;width:auto;border-radius:3px}
+
+  /* ---------- ORDER BUMP ---------- */
+  .bump{
+    border:2px dashed var(--g);background:var(--g-soft);border-radius:14px;
+    padding:24px;margin-top:26px
+  }
+  .bump h4{font-size:1.02rem;font-weight:900;color:var(--g-deep);line-height:1.35;margin-bottom:14px}
+  .bump img{border-radius:10px;margin:0 auto 14px;max-width:300px}
+  .bump p{font-size:.9rem;margin-bottom:12px;color:#3B4A43}
+  .bump .pp{font-weight:900;color:var(--g-deep);font-size:1.1rem;margin-bottom:14px}
+  .bump .pp s{color:var(--mute);font-weight:600;font-size:.92rem}
+  .bumpcheck{
+    display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);
+    border-radius:10px;padding:15px 17px;cursor:pointer
+  }
+  .bumpcheck input{width:20px;height:20px;accent-color:var(--g);cursor:pointer;flex:none}
+  .bumpcheck span{font-weight:800;color:var(--ink);font-size:.97rem}
+
+  /* ---------- RESUMEN ---------- */
+  .summary{margin-top:28px;border-top:1px solid var(--line);padding-top:20px}
+  .summary .lbl{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-bottom:12px}
+  .line{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:.95rem;color:var(--ink)}
+  .line.tot{border-top:1px solid var(--line);margin-top:8px;padding-top:14px;font-weight:900;font-size:1.15rem}
+  .line.tot span:last-child{color:var(--g)}
+
+  .pay{
+    display:block;width:100%;margin-top:22px;background:var(--g);color:#fff;border:none;
+    font-family:inherit;font-weight:800;font-size:1.15rem;padding:20px;border-radius:11px;
+    cursor:pointer;transition:background .15s ease,transform .12s ease
+  }
+  .pay:hover:not(:disabled){background:var(--g-deep);transform:translateY(-1px)}
+  .pay:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .terms{text-align:center;font-size:.78rem;color:var(--mute);margin-top:12px}
+  .terms a{color:var(--g)}
+  .err{
+    display:none;background:#FDECEA;border:1px solid #F5C2BC;color:#9B2C1E;
+    border-radius:9px;padding:13px 15px;font-size:.88rem;margin-top:16px
+  }
+  .secure{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:16px;
+    font-size:.78rem;color:var(--mute)}
+
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr;gap:34px}
+    .wrap{padding:26px 16px 50px}
+    .card{padding:22px;border-radius:14px}
+    .prod .art{max-width:330px}
+    .row2{grid-template-columns:96px 1fr;gap:8px}
+    .bump{padding:18px}
+    .bump h4{font-size:.96rem}
+    .pay{font-size:1.05rem;padding:18px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="grid">
+
+    <!-- ════════ IZQUIERDA: PRODUCTO ════════ -->
+    <div class="prod">
+      <h1>20K en 30 Días</h1>
+      <img class="art" src="img/hero-collage.png" alt="20K en 30 Días">
+      <div class="price">Precio: $37</div>
+      <h2>¿Qué incluye?</h2>
+      <ul class="inc">
+        <li><b>El Sistema de Series de Contenido:</b> <i>el mapa completo para diseñar, estructurar y lanzar una serie que atrae seguidores desde cero. Sin publicar todos los días y sin autoridad previa.</i></li>
+        <li><b>Optimización de Perfil:</b> <i>bio, nombre buscable, foto, portadas y el orden de los primeros nueve posts. Con plantilla según tu punto de partida.</i></li>
+        <li><b>El Carrusel de 7 Slides:</b> <i>la estructura que más seguidores me dio, slide por slide, con las 30 plantillas editables incluidas.</i></li>
+        <li><b>Reels Sin Salir en Cámara:</b> <i>formato, hook de 1 segundo, loop y el flujo de edición exacto. Dos de mis tres cuentas crecieron sin que yo apareciera.</i></li>
+        <li><b>El Calendario de 30 Días:</b> <i>qué publicar cada día del mes, en qué orden y por qué ese orden importa.</i></li>
+        <li><b>Métricas y Escalado:</b> <i>las cuatro métricas que miro y qué hago exactamente cuando un post pega, para exprimirlo en vez de dejarlo morir.</i></li>
+        <li><b>🎁 [BONUS] Banco de 100 Hooks:</b> <i>los mismos que usé en las 17 cuentas. Copiar, adaptar, publicar.</i></li>
+      </ul>
+    </div>
+
+    <!-- ════════ DERECHA: FORMULARIO ════════ -->
+    <div>
+      <form class="card" id="form">
+        <h3>Completa tu información para obtener acceso</h3>
+
+        <label for="nombre">Nombre <span class="req">*</span></label>
+        <input id="nombre" name="nombre" type="text" placeholder="Escribe tu nombre" required autocomplete="given-name">
+
+        <label for="apellido">Apellido <span class="req">*</span></label>
+        <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" required autocomplete="family-name">
+
+        <label for="email">Email <span class="req">*</span></label>
+        <input id="email" name="email" type="email" placeholder="Tu mejor email" required autocomplete="email">
+
+        <label for="tel">Teléfono <span class="req">*</span></label>
+        <div class="row2">
+          <select id="pref" aria-label="Código de país">
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+52">🇲🇽 +52</option>
+            <option value="+57">🇨🇴 +57</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+54">🇦🇷 +54</option>
+            <option value="+56">🇨🇱 +56</option>
+            <option value="+51">🇵🇪 +51</option>
+            <option value="+58">🇻🇪 +58</option>
+            <option value="+593">🇪🇨 +593</option>
+            <option value="+502">🇬🇹 +502</option>
+            <option value="+503">🇸🇻 +503</option>
+            <option value="+504">🇭🇳 +504</option>
+            <option value="+505">🇳🇮 +505</option>
+            <option value="+506">🇨🇷 +506</option>
+            <option value="+507">🇵🇦 +507</option>
+            <option value="+591">🇧🇴 +591</option>
+            <option value="+595">🇵🇾 +595</option>
+            <option value="+598">🇺🇾 +598</option>
+            <option value="+809">🇩🇴 +809</option>
+          </select>
+          <input id="tel" name="tel" type="tel" placeholder="Número de contacto" required autocomplete="tel">
+        </div>
+
+        <label for="pais">País <span class="req">*</span></label>
+        <select id="pais" name="pais" required>
+          <option value="US">Estados Unidos</option>
+          <option value="MX">México</option>
+          <option value="CO">Colombia</option>
+          <option value="ES">España</option>
+          <option value="AR">Argentina</option>
+          <option value="CL">Chile</option>
+          <option value="PE">Perú</option>
+          <option value="VE">Venezuela</option>
+          <option value="EC">Ecuador</option>
+          <option value="GT">Guatemala</option>
+          <option value="SV">El Salvador</option>
+          <option value="HN">Honduras</option>
+          <option value="NI">Nicaragua</option>
+          <option value="CR">Costa Rica</option>
+          <option value="PA">Panamá</option>
+          <option value="BO">Bolivia</option>
+          <option value="PY">Paraguay</option>
+          <option value="UY">Uruguay</option>
+          <option value="DO">República Dominicana</option>
+          <option value="PR">Puerto Rico</option>
+        </select>
+
+        <div class="paytitle">Método de pago</div>
+        <div class="paybox">
+          <div class="head">
+            <span>Tarjeta de crédito o débito</span>
+            <div class="cards">
+              <svg viewBox="0 0 48 32" aria-label="Visa"><rect width="48" height="32" rx="4" fill="#1A1F71"/><text x="24" y="21" font-family="Arial" font-size="13" font-weight="bold" fill="#fff" text-anchor="middle">VISA</text></svg>
+              <svg viewBox="0 0 48 32" aria-label="Mastercard"><rect width="48" height="32" rx="4" fill="#fff" stroke="#E2E7E4"/><circle cx="20" cy="16" r="9" fill="#EB001B"/><circle cx="28" cy="16" r="9" fill="#F79E1B" fill-opacity=".85"/></svg>
+              <svg viewBox="0 0 48 32" aria-label="American Express"><rect width="48" height="32" rx="4" fill="#2E77BC"/><text x="24" y="20" font-family="Arial" font-size="8" font-weight="bold" fill="#fff" text-anchor="middle">AMEX</text></svg>
+            </div>
+          </div>
+          <!-- Aquí Stripe monta los campos de tarjeta -->
+          <div id="stripe-element"></div>
+        </div>
+
+        <!-- ════════ ORDER BUMP ════════ -->
+        <div class="bump">
+          <h4>[ALTAMENTE RECOMENDADO]: Los 4 posts que hicieron 57,390 seguidores, desglosados uno por uno</h4>
+          <img src="img/insight-mantra.png" alt="Desglose de los posts">
+          <p>No el resumen: <b>el desglose completo</b>. Cada uno de los cuatro posts que más
+          seguidores trajeron, abierto por dentro — el hook exacto, por qué funciona ese primer
+          segundo, cómo está armada la estructura, en qué momento la gente decide seguirte y qué
+          habría pasado si cambiaba una sola cosa.</p>
+          <p>Ya tienes el sistema. Esto es verlo aplicado en las piezas que produjeron
+          <b>27,101 y 18,090 seguidores</b>, para que copies la mecánica y no el tema.</p>
+          <div class="pp">$17.00 <s>(normalmente $47)</s></div>
+          <label class="bumpcheck">
+            <input type="checkbox" id="bump">
+            <span>Sí, quiero el desglose de los 4 posts</span>
+          </label>
+        </div>
+
+        <!-- ════════ RESUMEN ════════ -->
+        <div class="summary">
+          <div class="lbl">Producto</div>
+          <div class="line"><span>20K en 30 Días</span><span>$37.00</span></div>
+          <div class="line" id="line-bump" hidden><span>Desglose de los 4 posts</span><span>$17.00</span></div>
+          <div class="line tot"><span>Total</span><span id="total">$37.00</span></div>
+        </div>
+
+        <button class="pay" id="pay" type="submit">Confirmar Pago</button>
+        <div class="err" id="err"></div>
+        <div class="terms">Si continúas, aceptas los <a href="#">términos y condiciones</a> de este producto.</div>
+        <div class="secure">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A938D" stroke-width="2.5"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          Pago cifrado y procesado por Stripe
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   CONFIGURACIÓN — lo único que hay que tocar
+   ══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  // Tu clave PUBLICABLE de Stripe (empieza por pk_). Es pública, puede ir aquí.
+  // NUNCA pongas aquí la clave secreta (sk_).
+  publishableKey: 'pk_live_PON_AQUI_TU_CLAVE_PUBLICABLE',
+  // Ruta de la función de servidor que crea el cobro
+  endpoint: '/api/crear-pago',
+  // Página a la que llega el comprador tras pagar
+  returnUrl: window.location.origin + '/gracias.html',
+  precios: { base: 3700, bump: 1700 }   // en centavos, solo para mostrar
+};
+
+const stripe = Stripe(CONFIG.publishableKey);
+const bumpEl  = document.getElementById('bump');
+const lineB   = document.getElementById('line-bump');
+const totalEl = document.getElementById('total');
+const errEl   = document.getElementById('err');
+const payBtn  = document.getElementById('pay');
+
+const money = c => '$' + (c/100).toFixed(2);
+const amount = () => CONFIG.precios.base + (bumpEl.checked ? CONFIG.precios.bump : 0);
+
+/* Elements en modo diferido: no hace falta pedir el importe al servidor
+   hasta que el comprador envía el formulario, así el order bump puede
+   cambiar el total sin recrear nada. */
+const appearance = {
+  theme: 'stripe',
+  variables: {
+    colorPrimary: '#10A75C', colorText: '#0A0B0A', colorDanger: '#D93A2B',
+    fontFamily: 'Poppins, system-ui, sans-serif', borderRadius: '9px', spacingUnit: '4px'
+  }
+};
+const elements = stripe.elements({ mode:'payment', amount: amount(), currency:'usd', appearance });
+elements.create('payment', { layout:'tabs', fields:{ billingDetails:'never' } }).mount('#stripe-element');
+
+bumpEl.addEventListener('change', () => {
+  lineB.hidden = !bumpEl.checked;
+  totalEl.textContent = money(amount());
+  elements.update({ amount: amount() });
+});
+
+function fallo(msg){
+  errEl.textContent = msg;
+  errEl.style.display = 'block';
+  payBtn.disabled = false;
+  payBtn.textContent = 'Confirmar Pago';
+  errEl.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+document.getElementById('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errEl.style.display = 'none';
+  payBtn.disabled = true;
+  payBtn.textContent = 'Procesando…';
+
+  const { error: submitError } = await elements.submit();
+  if (submitError) return fallo(submitError.message);
+
+  const datos = {
+    conBump: bumpEl.checked,
+    nombre:  document.getElementById('nombre').value.trim(),
+    apellido:document.getElementById('apellido').value.trim(),
+    email:   document.getElementById('email').value.trim(),
+    telefono:document.getElementById('pref').value + ' ' + document.getElementById('tel').value.trim(),
+    pais:    document.getElementById('pais').value
+  };
+
+  let clientSecret;
+  try {
+    const r = await fetch(CONFIG.endpoint, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(datos)
+    });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || 'No se pudo iniciar el cobro.');
+    clientSecret = j.clientSecret;
+  } catch (err) {
+    return fallo(err.message + ' Si el problema sigue, escríbenos.');
+  }
+
+  const { error } = await stripe.confirmPayment({
+    elements, clientSecret,
+    confirmParams: {
+      return_url: CONFIG.returnUrl,
+      payment_method_data: {
+        billing_details: {
+          name: datos.nombre + ' ' + datos.apellido,
+          email: datos.email,
+          phone: datos.telefono,
+          address: { country: datos.pais }
+        }
+      }
+    }
+  });
+  if (error) fallo(error.message);
+});
+</script>
+</body>
+</html>

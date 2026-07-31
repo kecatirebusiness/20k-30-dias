@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Listo! Ya tienes acceso — 20K en 30 Días</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800;900&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+  :root{--black:#050704;--g-bright:#3DDC84;--g-deep:#0A6E3C}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);
+    color:#A7B0AA;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:30px;text-align:center;-webkit-font-smoothing:antialiased;line-height:1.6}
+  .box{max-width:600px}
+  .tick{width:82px;height:82px;border-radius:50%;background:var(--g-bright);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 28px;
+    box-shadow:0 0 0 10px rgba(61,220,132,.14)}
+  h1{color:#fff;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:900;line-height:1.2;
+    letter-spacing:-.02em;margin-bottom:18px}
+  p{margin-bottom:18px}
+  b{color:#fff}
+  .mail{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);
+    border-radius:14px;padding:24px;margin:28px 0;font-size:.95rem}
+  .btn{display:inline-block;background:var(--g-bright);color:#04180D;text-decoration:none;
+    font-weight:800;padding:17px 38px;border-radius:10px;font-size:1.02rem}
+  .small{font-size:.82rem;color:#78827C;margin-top:26px}
+  #pendiente,#fallo{display:none}
+</style>
+</head>
+<body>
+<div class="box">
+
+  <div id="ok">
+    <div class="tick">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#04180D" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h1>Pago confirmado.<br>Ya estás dentro.</h1>
+    <p>Bienvenido a <b>20K en 30 Días</b>. Tienes acceso de por vida a todo el sistema.</p>
+    <div class="mail">
+      📩 En los próximos minutos te llega un email con <b>tus datos de acceso</b>.<br>
+      Si no lo ves, revisa <b>spam</b> o <b>promociones</b> — a veces se esconde ahí.
+    </div>
+    <a class="btn" href="index.html">Volver al inicio</a>
+    <p class="small">¿Algún problema con el acceso? Escríbenos y lo resolvemos.</p>
+  </div>
+
+  <div id="pendiente">
+    <h1>Tu pago se está procesando</h1>
+    <p>Puede tardar unos minutos. Te avisamos por email en cuanto se confirme.</p>
+  </div>
+
+  <div id="fallo">
+    <h1>El pago no se completó</h1>
+    <p id="motivo">Tu tarjeta no se ha cobrado. Puedes intentarlo de nuevo.</p>
+    <a class="btn" href="carrito.html">Volver a intentarlo</a>
+  </div>
+
+</div>
+
+<script>
+// Misma clave publicable que en carrito.html
+const PUBLISHABLE_KEY = 'pk_live_PON_AQUI_TU_CLAVE_PUBLICABLE';
+
+const params = new URLSearchParams(window.location.search);
+const cs = params.get('payment_intent_client_secret');
+
+function mostrar(id, motivo){
+  ['ok','pendiente','fallo'].forEach(x => document.getElementById(x).style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+  if (motivo) document.getElementById('motivo').textContent = motivo;
+}
+
+if (cs) {
+  Stripe(PUBLISHABLE_KEY).retrievePaymentIntent(cs).then(({paymentIntent}) => {
+    const s = paymentIntent && paymentIntent.status;
+    if (s === 'succeeded') mostrar('ok');
+    else if (s === 'processing') mostrar('pendiente');
+    else mostrar('fallo', 'Tu tarjeta no se ha cobrado. Puedes intentarlo de nuevo con otro método.');
+  }).catch(() => mostrar('ok'));
+}
+</script>
+</body>
+</html>

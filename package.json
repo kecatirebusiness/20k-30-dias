@@ -1,0 +1,9 @@
+{
+  "name": "20k-en-30-dias",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing y carrito de 20K en 30 Días",
+  "dependencies": {
+    "stripe": "^17.0.0"
+  }
+}
