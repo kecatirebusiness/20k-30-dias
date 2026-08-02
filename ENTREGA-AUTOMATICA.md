@@ -53,11 +53,25 @@ Añade estas tres (la de Stripe ya la tienes):
 |------|-------|
 | `STRIPE_WEBHOOK_SECRET` | el `whsec_...` del paso 2 |
 | `RESEND_API_KEY` | el `re_...` del paso 1 |
-| `EMAIL_REMITENTE` | `Kevin <kevin@tudominio.com>` |
+| `EMAIL_REMITENTE` | `Kevin Rodriguez <contact@primeproductionmedia.com>` |
 
-**Si todavía no tienes dominio verificado**, usa como remitente:
-`Kevin <onboarding@resend.dev>` — funciona para probar, pero solo puede enviarte a ti mismo.
-Para vender de verdad necesitas dominio propio.
+**Estado actual: ya está puesto así.** El dominio `primeproductionmedia.com` está verificado
+en Resend (1 ago 2026) con estos registros DNS en Squarespace:
+
+| Tipo | Nombre | Valor |
+|------|--------|-------|
+| TXT | `send` | `v=spf1 include:amazonses.com ~all` |
+| MX | `send` (prio 10) | `feedback-smtp.us-east-1.amazonses.com` |
+| TXT | `resend._domainkey` | la clave DKIM que da Resend |
+| TXT | `_dmarc` | `v=DMARC1; p=none;` |
+
+⚠️ **No tocar los registros de Google Workspace** (`MX @` prio 1 → `smtp.google.com`,
+`TXT google._domainkey`, `TXT @` con el SPF de Google). Los de Resend viven en el
+subdominio `send` justamente para que los dos SPF no se pisen. Si algún día pones el SPF
+de Amazon en `@`, rompes el correo de Google Workspace.
+
+Como `contact@primeproductionmedia.com` es un buzón real de Google Workspace, las
+respuestas de los compradores te llegan ahí.
 
 Después de añadirlas: **Deployments → el último → Redeploy.** Las variables nuevas no
 se aplican hasta que redespliegas.
