@@ -120,6 +120,13 @@
   .pay:disabled{opacity:.6;cursor:not-allowed;transform:none}
   .terms{text-align:center;font-size:.78rem;color:var(--mute);margin-top:12px}
   .terms a{color:var(--g)}
+  /* aceptación explícita: sin esto la política de no-devolución no se sostiene */
+  .acepta{display:flex;gap:11px;align-items:flex-start;margin-top:22px;
+    background:#F7F9F8;border:1px solid var(--line);border-radius:10px;padding:14px 16px;
+    font-size:.82rem;line-height:1.5;color:var(--body);cursor:pointer}
+  .acepta input{width:19px;height:19px;accent-color:var(--g);cursor:pointer;flex:none;margin-top:1px}
+  .acepta b{color:var(--ink);font-weight:700}
+  .acepta a{color:var(--g);font-weight:600}
   .err{
     display:none;background:#FDECEA;border:1px solid #F5C2BC;color:#9B2C1E;
     border-radius:9px;padding:13px 15px;font-size:.88rem;margin-top:16px
@@ -264,9 +271,18 @@
           <div class="line tot"><span>Total</span><span id="total">$37.00</span></div>
         </div>
 
+        <!-- La política de "sin devolución" solo es oponible si se declara ANTES de pagar.
+             Y para compradores de la UE, el derecho de desistimiento solo decae con
+             aceptación expresa de la entrega inmediata: de ahí esta casilla. -->
+        <label class="acepta">
+          <input type="checkbox" id="acepta" required>
+          <span>Entiendo que los archivos se entregan <b>de inmediato</b> tras el pago y que,
+          por tratarse de contenido digital, <b>esta compra no admite devolución</b>.
+          Acepto los <a href="/terminos" target="_blank" rel="noopener">términos y condiciones</a>.</span>
+        </label>
+
         <button class="pay" id="pay" type="submit">Confirmar Pago</button>
         <div class="err" id="err"></div>
-        <div class="terms">Si continúas, aceptas los <a href="#">términos y condiciones</a> de este producto.</div>
         <div class="secure">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A938D" stroke-width="2.5"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
           Pago cifrado y procesado por Stripe
@@ -331,6 +347,13 @@ function fallo(msg){
 
 document.getElementById('form').addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  // El navegador ya bloquea el submit si falta la casilla, pero el consentimiento
+  // es lo que sostiene la politica de no-devolucion: se comprueba tambien aqui.
+  if (!document.getElementById('acepta').checked) {
+    return fallo('Marca la casilla de aceptación para continuar con el pago.');
+  }
+
   errEl.style.display = 'none';
   payBtn.disabled = true;
   payBtn.textContent = 'Procesando…';
