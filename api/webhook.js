@@ -58,16 +58,13 @@ const CONFIG = {
     },
   ],
   // Qué se entrega ADEMÁS si compró el order bump.
-  // Cuando produzcas el desglose, ponlo en api/_entregables/ y descomenta esto.
-  // Mientras esté vacío, el correo NO promete nada extra — pero el carrito
-  // sigue cobrando $17 por ello. O se produce, o se quita del carrito.
   bump: [
-    // {
-    //   archivo: 'Desglose-4-Posts.pdf',
-    //   nombre: 'Desglose de los 4 posts.pdf',
-    //   titulo: 'Los 4 posts, desglosados',
-    //   descripcion: 'Las cuatro piezas que trajeron 57,390 seguidores, abiertas por dentro: hook, estructura y por qué funcionó.',
-    // },
+    {
+      archivo: 'Desglose-4-Posts.pdf',
+      nombre: 'Los 4 posts, desglosados.pdf',
+      titulo: 'Los 4 posts, desglosados',
+      descripcion: 'Las cuatro piezas que trajeron 50,208 seguidores —el 87% del total— abiertas por dentro, con los Insights en pantalla.',
+    },
   ],
   // Cuándo se abren los módulos en video. Cámbialo cuando tengas fecha.
   fechaModulos: 'PENDIENTE',
