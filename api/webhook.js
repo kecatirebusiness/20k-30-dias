@@ -48,7 +48,7 @@ const CONFIG = {
       archivo: '30-Plantillas-de-Carrusel.pdf',
       nombre: '30 Plantillas de Carrusel.pdf',
       titulo: '30 Plantillas de Carrusel',
-      descripcion: '30 carruseles de 7 slides escritos enteros, en 6 tipos. Cambias el tema y publicas.',
+      descripcion: '50 páginas. 30 carruseles de 7 slides escritos enteros, maquetados y en 6 tipos.',
     },
     {
       archivo: 'Banco-de-100-Hooks.pdf',
