@@ -5,10 +5,6 @@
     "api/webhook.js": {
       "includeFiles": "api/_entregables/**",
       "maxDuration": 30
-    },
-    "api/prueba-envio-9f3c1a.js": {
-      "includeFiles": "api/_entregables/**",
-      "maxDuration": 60
     }
   }
 }
