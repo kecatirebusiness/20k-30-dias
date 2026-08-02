@@ -42,18 +42,24 @@ const CONFIG = {
       archivo: 'El-Reto-de-30-Dias.pdf',
       nombre: 'El Reto de 30 Días.pdf',
       titulo: 'El Reto de 30 Días',
+      portada: 'reto.png',
+      paginas: 80,
       descripcion: '80 páginas. El sistema completo, el calendario día por día y 10 plantillas para rellenar.',
     },
     {
       archivo: '30-Plantillas-de-Carrusel.pdf',
       nombre: '30 Plantillas de Carrusel.pdf',
       titulo: '30 Plantillas de Carrusel',
+      portada: 'plantillas.png',
+      paginas: 50,
       descripcion: '50 páginas. 30 carruseles de 7 slides escritos enteros, maquetados y en 6 tipos.',
     },
     {
       archivo: 'Banco-de-100-Hooks.pdf',
       nombre: 'Banco de 100 Hooks.pdf',
       titulo: 'Banco de 100 Hooks',
+      portada: 'hooks.png',
+      paginas: 12,
       descripcion: 'Los primeros tres segundos, resueltos. 100 frases terminadas, no plantillas.',
     },
   ],
@@ -63,6 +69,8 @@ const CONFIG = {
       archivo: 'Desglose-4-Posts.pdf',
       nombre: 'Los 4 posts, desglosados.pdf',
       titulo: 'Los 4 posts, desglosados',
+      portada: 'desglose.png',
+      paginas: 16,
       descripcion: 'Las cuatro piezas que trajeron 50,208 seguidores —el 87% del total— abiertas por dentro, con los Insights en pantalla.',
     },
   ],
@@ -71,6 +79,9 @@ const CONFIG = {
   // Va en el pie. Es el mismo buzón desde el que se envía, así que las
   // respuestas de los compradores caen donde tienen que caer.
   soporte: 'contact@primeproductionmedia.com',
+  // Las portadas viven en el propio despliegue. Tienen que ser URL absolutas:
+  // en correo no existe la ruta relativa.
+  sitio: 'https://20k-30-dias.vercel.app',
 };
 
 /* ══════════════════════════════════════════════════════════
@@ -99,6 +110,52 @@ const FUENTE = `Poppins,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Ar
 // Un separador vertical. En correo no se usa margin: los clientes de Outlook lo
 // ignoran. Se usa una fila vacía con altura explícita.
 const hueco = (px) => `<tr><td style="height:${px}px;font-size:0;line-height:0;">&nbsp;</td></tr>`;
+
+// Una fila de portadas. Se dibuja con tabla y anchos en atributo, no en CSS:
+// Outlook ignora el ancho declarado en estilos para las imágenes.
+function portadas(lista) {
+  const n = lista.length;
+  const ancho = n >= 4 ? 118 : 160;
+  const celdas = lista
+    .map(
+      ({ portada, titulo, paginas }) => `
+        <td align="center" valign="top" width="${Math.floor(520 / n)}" style="padding:0 6px;">
+          <img src="${CONFIG.sitio}/email/${portada}" width="${ancho}" alt="Portada · ${titulo}"
+               style="display:block;width:${ancho}px;max-width:100%;height:auto;border-radius:8px;
+                      border:1px solid rgba(255,255,255,.14);margin:0 auto 10px;background:#0C140F;
+                      font-family:${FUENTE};font-size:11px;line-height:1.4;color:#5E6864;
+                      text-align:center;">
+          <div style="font-family:${FUENTE};font-size:11.5px;font-weight:600;color:#FFFFFF;
+                      line-height:1.35;">${titulo}</div>
+          <div style="font-family:${FUENTE};font-size:10.5px;color:#6E7973;padding-top:2px;">${paginas} páginas</div>
+        </td>`
+    )
+    .join('');
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>${celdas}</tr></table>`;
+}
+
+// La tira de cifras. Todo en tabla: es lo único que Outlook maqueta bien.
+function cifras(lista) {
+  const totalPags = lista.reduce((s, x) => s + (x.paginas || 0), 0);
+  const datos = [
+    [String(totalPags), 'páginas'],
+    [String(lista.length), lista.length === 1 ? 'archivo' : 'archivos'],
+    ['De por vida', 'y sin cargos'],
+  ];
+  const celdas = datos
+    .map(
+      ([n, l]) => `
+        <td align="center" width="33%" style="padding:14px 6px;">
+          <div style="font-family:${FUENTE};font-size:21px;font-weight:800;color:#3DDC84;
+                      line-height:1;letter-spacing:-.5px;">${n}</div>
+          <div style="font-family:${FUENTE};font-size:10px;color:#78827C;text-transform:uppercase;
+                      letter-spacing:1.2px;padding-top:6px;">${l}</div>
+        </td>`
+    )
+    .join('');
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+            style="background:#0C140F;border-radius:10px;"><tr>${celdas}</tr></table>`;
+}
 
 // Una viñeta del panel de entregables.
 function fila({ titulo, descripcion }, i) {
@@ -193,7 +250,21 @@ function plantillaEmail({ nombre, entregados }) {
       a este correo</strong> — descárgalas y guárdalas. Son tuyas de por vida.
     </td></tr>
 
-    ${hueco(32)}
+    ${hueco(30)}
+
+    <!-- Portadas. Si el cliente bloquea imágenes queda el alt y el listado de abajo,
+         que es donde está la información de verdad. -->
+    <tr><td class="pad-x" style="padding:0 40px;">
+      ${portadas(entregados)}
+    </td></tr>
+
+    ${hueco(26)}
+
+    <tr><td class="pad-x" style="padding:0 40px;">
+      ${cifras(entregados)}
+    </td></tr>
+
+    ${hueco(30)}
 
     <tr><td class="pad-x" style="padding:0 40px;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0C140F;border-radius:10px;">
@@ -229,7 +300,25 @@ function plantillaEmail({ nombre, entregados }) {
 
     <tr><td class="pad-x" style="padding:0 40px;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #23302A;border-radius:10px;">
-        <tr><td style="padding:18px 22px;font-family:${FUENTE};font-size:14px;line-height:1.6;color:#8B948E;">
+        <tr><td style="padding:18px 22px 4px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td width="50%" style="padding-right:8px;">
+                <div style="height:4px;background:#3DDC84;border-radius:2px;font-size:0;line-height:0;">&nbsp;</div>
+                <div style="font-family:${FUENTE};font-size:10px;font-weight:800;letter-spacing:1.2px;
+                            text-transform:uppercase;color:#3DDC84;padding-top:8px;">Ya lo tienes</div>
+                <div style="font-family:${FUENTE};font-size:12.5px;color:#C9D2CC;padding-top:2px;">Las guías, adjuntas aquí</div>
+              </td>
+              <td width="50%" style="padding-left:8px;">
+                <div style="height:4px;background:#23302A;border-radius:2px;font-size:0;line-height:0;">&nbsp;</div>
+                <div style="font-family:${FUENTE};font-size:10px;font-weight:800;letter-spacing:1.2px;
+                            text-transform:uppercase;color:#6E7973;padding-top:8px;">En camino</div>
+                <div style="font-family:${FUENTE};font-size:12.5px;color:#8B948E;padding-top:2px;">Los módulos en video</div>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding:12px 22px 18px;font-family:${FUENTE};font-size:13.5px;line-height:1.6;color:#8B948E;">
           ${modulos}
         </td></tr>
       </table>
