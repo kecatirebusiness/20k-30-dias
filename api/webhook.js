@@ -14,6 +14,7 @@ const Stripe = require('stripe');
 const { Resend } = require('resend');
 const fs = require('fs');
 const path = require('path');
+const { firma } = require('./descargar.js');
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -41,6 +42,7 @@ const CONFIG = {
     {
       archivo: 'El-Reto-de-30-Dias.pdf',
       nombre: 'El Reto de 30 Días.pdf',
+      clave: 'reto',
       titulo: 'El Reto de 30 Días',
       portada: 'reto.png',
       paginas: 80,
@@ -59,6 +61,7 @@ const CONFIG = {
     {
       archivo: '30-Plantillas-de-Carrusel.pdf',
       nombre: '30 Plantillas de Carrusel.pdf',
+      clave: 'plantillas',
       titulo: '30 Plantillas de Carrusel',
       portada: 'plantillas.png',
       paginas: 50,
@@ -67,6 +70,7 @@ const CONFIG = {
     {
       archivo: 'Banco-de-100-Hooks.pdf',
       nombre: 'Banco de 100 Hooks.pdf',
+      clave: 'hooks',
       titulo: 'Banco de 100 Hooks',
       portada: 'hooks.png',
       paginas: 12,
@@ -78,6 +82,7 @@ const CONFIG = {
     {
       archivo: 'Desglose-4-Posts.pdf',
       nombre: 'Los 4 posts, desglosados.pdf',
+      clave: 'desglose',
       titulo: 'Los 4 posts, desglosados',
       portada: 'desglose.png',
       paginas: 16,
@@ -121,10 +126,26 @@ const FUENTE = `Poppins,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Ar
 // ignoran. Se usa una fila vacía con altura explícita.
 const hueco = (px) => `<tr><td style="height:${px}px;font-size:0;line-height:0;">&nbsp;</td></tr>`;
 
+// Botón de descarga. En correo un botón es una tabla con fondo: un <a> con
+// padding lo ignora Outlook.
+function boton(url, texto, grande) {
+  if (!url) return '';
+  const alto = grande ? '13px 26px' : '9px 18px';
+  const tam = grande ? '14px' : '12.5px';
+  return `
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:${grande ? 16 : 10}px;">
+    <tr><td align="center" bgcolor="#3DDC84" style="border-radius:8px;">
+      <a href="${url}" style="display:inline-block;padding:${alto};font-family:${FUENTE};
+         font-size:${tam};font-weight:800;color:#04180D;text-decoration:none;letter-spacing:.2px;">
+        ${texto} &nbsp;&darr;</a>
+    </td></tr>
+  </table>`;
+}
+
 // La pieza principal. Ocupa el ancho entero: portada grande a la izquierda y el
 // argumento a la derecha. Dos columnas fijas, sin media queries, porque el soporte
 // de @media en clientes de correo es irregular y esto tiene que aguantar en todos.
-function principal(item) {
+function principal(item, enlace) {
   const claves = (item.claves || [])
     .map(
       (t) => `
@@ -172,13 +193,14 @@ function principal(item) {
         <tr><td style="border-top:1px solid rgba(255,255,255,.10);padding-top:12px;
             font-family:${FUENTE};font-size:13.5px;font-weight:600;color:#3DDC84;">
           ${item.cierre}</td></tr>
+        <tr><td>${boton(enlace, 'Descargar la guía', true)}</td></tr>
       </table>
     </td></tr>
   </table>`;
 }
 
 // Los acompañantes. Fila horizontal: portada pequeña y su línea.
-function secundarios(lista) {
+function secundarios(lista, enlaces) {
   const filas = lista
     .map(
       (x, i) => `
@@ -193,6 +215,7 @@ function secundarios(lista) {
         <td valign="top" style="font-family:${FUENTE};padding-top:2px;">
           <div style="font-size:15px;font-weight:600;color:#FFFFFF;line-height:1.35;">${x.titulo}</div>
           <div style="font-size:13px;line-height:1.5;color:#8B948E;padding-top:4px;">${x.descripcion}</div>
+          ${boton(enlaces[x.clave], 'Descargar')}
         </td>
       </tr>`
     )
@@ -250,7 +273,18 @@ function paso(n, texto) {
       </tr>`;
 }
 
-function plantillaEmail({ nombre, entregados }) {
+function plantillaEmail({ nombre, entregados, pagoId }) {
+  // Sin id no hay enlace posible: el correo sale igual, solo con adjuntos.
+  const enlaces = {};
+  if (pagoId) {
+    const t = firma(pagoId);
+    for (const x of entregados) {
+      if (x.clave) {
+        enlaces[x.clave] = `${CONFIG.sitio}/api/descargar?id=${encodeURIComponent(pagoId)}&t=${t}&f=${x.clave}`;
+      }
+    }
+  }
+
   const modulos =
     CONFIG.fechaModulos === 'PENDIENTE'
       ? `<strong style="color:#FFFFFF;font-weight:600;">Los módulos en video se abren muy pronto.</strong>
@@ -327,7 +361,7 @@ function plantillaEmail({ nombre, entregados }) {
     <!-- La pieza principal. Si el cliente bloquea imágenes queda el texto,
          que es donde está el argumento de verdad. -->
     <tr><td class="pad-x" style="padding:0 40px;">
-      ${principal(jefe)}
+      ${principal(jefe, enlaces[jefe.clave])}
     </td></tr>
 
     ${hueco(26)}
@@ -346,7 +380,7 @@ function plantillaEmail({ nombre, entregados }) {
     ${hueco(16)}
 
     <tr><td class="pad-x" style="padding:0 40px;">
-      ${secundarios(resto)}
+      ${secundarios(resto, enlaces)}
     </td></tr>` : ''}
 
     ${hueco(36)}
@@ -469,7 +503,7 @@ module.exports = async (req, res) => {
       from: process.env.EMAIL_REMITENTE,
       to: email,
       subject: 'Ya estás dentro — tus guías van adjuntas',
-      html: plantillaEmail({ nombre, entregados }),
+      html: plantillaEmail({ nombre, entregados, pagoId: intent.id }),
       attachments: adjuntar(entregados),
     });
 
@@ -481,3 +515,6 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'Fallo al enviar el email' });
   }
 };
+
+// ⚠️ TEMPORAL — se retira junto con api/prueba-envio-9f3c1a.js
+module.exports._pruebas = { CONFIG, plantillaEmail };
