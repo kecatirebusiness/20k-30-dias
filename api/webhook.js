@@ -16,7 +16,15 @@ const fs = require('fs');
 const path = require('path');
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Resend se crea dentro del handler, no al cargar el módulo: si la variable de
+// entorno falta, el constructor lanza y la función devolvería 500 antes incluso
+// de poder rechazar una firma inválida. Así los errores salen donde toca.
+let _resend = null;
+function correo() {
+  if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY);
+  return _resend;
+}
 
 // Stripe firma el cuerpo original. Si Vercel lo parsea, la firma no valida.
 module.exports.config = { api: { bodyParser: false } };
@@ -164,7 +172,7 @@ module.exports = async (req, res) => {
   try {
     const adjuntos = adjuntar([...CONFIG.base, ...(conBump ? CONFIG.bump : [])]);
 
-    await resend.emails.send({
+    await correo().emails.send({
       from: process.env.EMAIL_REMITENTE,
       to: email,
       subject: 'Ya estás dentro — tus guías van adjuntas',
