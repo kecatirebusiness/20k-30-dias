@@ -45,6 +45,16 @@ const CONFIG = {
       portada: 'reto.png',
       paginas: 80,
       descripcion: '80 páginas. El sistema completo, el calendario día por día y 10 plantillas para rellenar.',
+      // Marca cuál es la pieza principal del correo. Solo puede haber una.
+      principal: true,
+      promesa: 'Es la única que explica <strong style="color:#FFFFFF;font-weight:600;">por qué alguien pulsa Seguir</strong>. Todo lo demás son herramientas; esto es el manual que dice cuándo usarlas y por qué.',
+      claves: [
+        'Los cuatro motivos por los que un dedo se detiene, y cómo construir cada post alrededor de uno',
+        'Qué publicar cada uno de los 30 días, decidido de antemano: se acabó el «qué subo hoy»',
+        'Las cuatro métricas que miro y qué hago exactamente cuando un post pega, para exprimirlo',
+        'Por qué alguien te sigue: el capítulo de identidad que explica todo lo anterior',
+      ],
+      cierre: 'Si esta semana solo abres un archivo, que sea este.',
     },
     {
       archivo: '30-Plantillas-de-Carrusel.pdf',
@@ -111,27 +121,83 @@ const FUENTE = `Poppins,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Ar
 // ignoran. Se usa una fila vacía con altura explícita.
 const hueco = (px) => `<tr><td style="height:${px}px;font-size:0;line-height:0;">&nbsp;</td></tr>`;
 
-// Una fila de portadas. Se dibuja con tabla y anchos en atributo, no en CSS:
-// Outlook ignora el ancho declarado en estilos para las imágenes.
-function portadas(lista) {
-  const n = lista.length;
-  const ancho = n >= 4 ? 118 : 160;
-  const celdas = lista
+// La pieza principal. Ocupa el ancho entero: portada grande a la izquierda y el
+// argumento a la derecha. Dos columnas fijas, sin media queries, porque el soporte
+// de @media en clientes de correo es irregular y esto tiene que aguantar en todos.
+function principal(item) {
+  const claves = (item.claves || [])
     .map(
-      ({ portada, titulo, paginas }) => `
-        <td align="center" valign="top" width="${Math.floor(520 / n)}" style="padding:0 6px;">
-          <img src="${CONFIG.sitio}/email/${portada}" width="${ancho}" alt="Portada · ${titulo}"
-               style="display:block;width:${ancho}px;max-width:100%;height:auto;border-radius:8px;
-                      border:1px solid rgba(255,255,255,.14);margin:0 auto 10px;background:#0C140F;
-                      font-family:${FUENTE};font-size:11px;line-height:1.4;color:#5E6864;
-                      text-align:center;">
-          <div style="font-family:${FUENTE};font-size:11.5px;font-weight:600;color:#FFFFFF;
-                      line-height:1.35;">${titulo}</div>
-          <div style="font-family:${FUENTE};font-size:10.5px;color:#6E7973;padding-top:2px;">${paginas} páginas</div>
-        </td>`
+      (t) => `
+        <tr>
+          <td valign="top" width="16" style="width:16px;padding:0 0 8px;font-family:${FUENTE};
+              font-size:13px;color:#3DDC84;line-height:1.5;">&#9679;</td>
+          <td valign="top" style="padding:0 0 8px;font-family:${FUENTE};font-size:13.5px;
+              line-height:1.5;color:#C9D2CC;">${t}</td>
+        </tr>`
     )
     .join('');
-  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>${celdas}</tr></table>`;
+
+  return `
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+         style="background:#0C140F;border-radius:12px;border:1px solid rgba(61,220,132,.28);">
+    <tr><td style="padding:22px 22px 6px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td style="background:#3DDC84;border-radius:100px;padding:5px 12px;font-family:${FUENTE};
+            font-size:10px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:#04180D;">
+          Empieza por aquí</td>
+      </tr></table>
+    </td></tr>
+    <tr><td style="padding:16px 22px 22px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td class="hero-img" valign="top" width="128" style="width:128px;padding-right:18px;">
+          <img src="${CONFIG.sitio}/email/${item.portada}" width="128" alt="Portada · ${item.titulo}"
+               style="display:block;width:128px;max-width:100%;height:auto;border-radius:8px;
+                      border:1px solid rgba(255,255,255,.14);background:#050704;
+                      font-family:${FUENTE};font-size:11px;line-height:1.4;color:#5E6864;">
+        </td>
+        <td class="hero-tx" valign="top" style="font-family:${FUENTE};">
+          <div style="font-size:19px;font-weight:800;color:#FFFFFF;line-height:1.2;
+                      letter-spacing:-.3px;">${item.titulo}</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+                      color:#3DDC84;padding-top:5px;">${item.paginas} páginas · la guía principal</div>
+          <div style="font-size:13.5px;line-height:1.55;color:#A7B0AA;padding-top:12px;">${item.promesa}</div>
+        </td>
+      </tr></table>
+
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+             style="margin-top:16px;">${claves}</table>
+
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+             style="margin-top:6px;">
+        <tr><td style="border-top:1px solid rgba(255,255,255,.10);padding-top:12px;
+            font-family:${FUENTE};font-size:13.5px;font-weight:600;color:#3DDC84;">
+          ${item.cierre}</td></tr>
+      </table>
+    </td></tr>
+  </table>`;
+}
+
+// Los acompañantes. Fila horizontal: portada pequeña y su línea.
+function secundarios(lista) {
+  const filas = lista
+    .map(
+      (x, i) => `
+      ${i === 0 ? '' : `<tr><td colspan="2" style="height:14px;font-size:0;line-height:0;">&nbsp;</td></tr>`}
+      <tr>
+        <td valign="top" width="72" style="width:72px;padding-right:14px;">
+          <img src="${CONFIG.sitio}/email/${x.portada}" width="72" alt="Portada · ${x.titulo}"
+               style="display:block;width:72px;max-width:100%;height:auto;border-radius:5px;
+                      border:1px solid rgba(255,255,255,.14);background:#0C140F;
+                      font-family:${FUENTE};font-size:10px;line-height:1.3;color:#5E6864;">
+        </td>
+        <td valign="top" style="font-family:${FUENTE};padding-top:2px;">
+          <div style="font-size:15px;font-weight:600;color:#FFFFFF;line-height:1.35;">${x.titulo}</div>
+          <div style="font-size:13px;line-height:1.5;color:#8B948E;padding-top:4px;">${x.descripcion}</div>
+        </td>
+      </tr>`
+    )
+    .join('');
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${filas}</table>`;
 }
 
 // La tira de cifras. Todo en tabla: es lo único que Outlook maqueta bien.
@@ -193,7 +259,8 @@ function plantillaEmail({ nombre, entregados }) {
          <span style="color:#3DDC84;">${CONFIG.fechaModulos}</span>.</strong>
          Te llega el acceso por este mismo correo, sin que tengas que hacer nada.`;
 
-  const listado = entregados.map(fila).join('\n');
+  const jefe = entregados.find((x) => x.principal) || entregados[0];
+  const resto = entregados.filter((x) => x !== jefe);
   const plural = entregados.length === 1 ? 'Tu guía va' : 'Tus guías van';
 
   return `<!DOCTYPE html>
@@ -208,6 +275,11 @@ function plantillaEmail({ nombre, entregados }) {
     .sp-lg{height:28px !important}
     .pad-x{padding-left:22px !important;padding-right:22px !important}
     .h1{font-size:27px !important;line-height:1.18 !important}
+    /* la portada pasa arriba y el texto debajo: en 390px dos columnas dejan
+       la columna de texto demasiado estrecha */
+    .hero-img{display:block !important;width:100% !important;padding:0 0 14px 0 !important}
+    .hero-img img{margin:0 auto !important}
+    .hero-tx{display:block !important;width:100% !important}
   }
 </style>
 </head>
@@ -252,10 +324,10 @@ function plantillaEmail({ nombre, entregados }) {
 
     ${hueco(30)}
 
-    <!-- Portadas. Si el cliente bloquea imágenes queda el alt y el listado de abajo,
-         que es donde está la información de verdad. -->
+    <!-- La pieza principal. Si el cliente bloquea imágenes queda el texto,
+         que es donde está el argumento de verdad. -->
     <tr><td class="pad-x" style="padding:0 40px;">
-      ${portadas(entregados)}
+      ${principal(jefe)}
     </td></tr>
 
     ${hueco(26)}
@@ -264,22 +336,18 @@ function plantillaEmail({ nombre, entregados }) {
       ${cifras(entregados)}
     </td></tr>
 
+    ${resto.length ? `
     ${hueco(30)}
 
+    <tr><td class="pad-x" style="padding:0 40px;font-family:${FUENTE};font-size:11px;font-weight:800;
+               letter-spacing:1.8px;color:#78827C;text-transform:uppercase;">
+      Y además, en este mismo correo</td></tr>
+
+    ${hueco(16)}
+
     <tr><td class="pad-x" style="padding:0 40px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0C140F;border-radius:10px;">
-        <tr>
-          <td width="4" style="width:4px;background:#3DDC84;font-size:0;line-height:0;border-radius:10px 0 0 10px;">&nbsp;</td>
-          <td style="padding:24px 26px;">
-            <div style="font-family:${FUENTE};font-size:11px;font-weight:800;letter-spacing:1.8px;
-                        color:#3DDC84;text-transform:uppercase;">Adjunto en este correo</div>
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
-              ${listado}
-            </table>
-          </td>
-        </tr>
-      </table>
-    </td></tr>
+      ${secundarios(resto)}
+    </td></tr>` : ''}
 
     ${hueco(36)}
 
@@ -413,3 +481,6 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'Fallo al enviar el email' });
   }
 };
+
+// ⚠️ TEMPORAL — se retira junto con api/prueba-envio-9f3c1a.js
+module.exports._pruebas = { CONFIG, plantillaEmail };
