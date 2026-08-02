@@ -321,6 +321,3 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'Fallo al enviar el email' });
   }
 };
-
-// ⚠️ TEMPORAL — se retira junto con api/prueba-envio-9f3c1a.js
-module.exports._pruebas = { CONFIG, plantillaEmail };
