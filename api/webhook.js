@@ -140,14 +140,14 @@ function cifras(lista) {
   const datos = [
     [String(totalPags), 'páginas'],
     [String(lista.length), lista.length === 1 ? 'archivo' : 'archivos'],
-    ['De por vida', 'y sin cargos'],
+    ['\u221E', 'acceso de por vida'],
   ];
   const celdas = datos
     .map(
       ([n, l]) => `
         <td align="center" width="33%" style="padding:14px 6px;">
           <div style="font-family:${FUENTE};font-size:21px;font-weight:800;color:#3DDC84;
-                      line-height:1;letter-spacing:-.5px;">${n}</div>
+                      line-height:1;letter-spacing:-.5px;white-space:nowrap;">${n}</div>
           <div style="font-family:${FUENTE};font-size:10px;color:#78827C;text-transform:uppercase;
                       letter-spacing:1.2px;padding-top:6px;">${l}</div>
         </td>`
@@ -413,3 +413,6 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'Fallo al enviar el email' });
   }
 };
+
+// ⚠️ TEMPORAL — se retira junto con api/prueba-envio-9f3c1a.js
+module.exports._pruebas = { CONFIG, plantillaEmail };
