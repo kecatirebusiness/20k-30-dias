@@ -45,6 +45,12 @@ const CONFIG = {
       descripcion: '80 páginas. El sistema completo, el calendario día por día y 10 plantillas para rellenar.',
     },
     {
+      archivo: '30-Plantillas-de-Carrusel.pdf',
+      nombre: '30 Plantillas de Carrusel.pdf',
+      titulo: '30 Plantillas de Carrusel',
+      descripcion: '30 carruseles de 7 slides escritos enteros, en 6 tipos. Cambias el tema y publicas.',
+    },
+    {
       archivo: 'Banco-de-100-Hooks.pdf',
       nombre: 'Banco de 100 Hooks.pdf',
       titulo: 'Banco de 100 Hooks',
